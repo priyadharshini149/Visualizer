@@ -1,0 +1,130 @@
+.container{
+    left:100px;
+   padding-top: 2rem;
+ 
+}
+.bar-container{
+    background-color:rgba(20, 20, 20, 0.487);
+
+    padding: 1rem;
+}
+.bar-con{
+    margin: auto;
+    background-color:rgba(0, 0, 0, 0.418);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    padding: 2rem;
+    overflow-x: scroll;
+}
+.bar-con::-webkit-scrollbar{
+    display: none;
+}
+.bar
+{
+    width: 5px;
+    display:inline-block;
+    margin: 1px 2px;
+    padding: 5px;
+    color: white;
+    bottom: 0; 
+       
+}
+.head{
+    display: flex;
+    margin: auto;
+    margin: 2rem 1rem;
+    justify-content: space-between;
+    background-color: rgba(0, 255, 255, 0.042);
+    border-radius: 10px;
+}
+.head div{
+    margin: 1rem;
+}
+.logo{
+    margin-left: 2rem;
+}
+.head-btn button{
+ margin: 0.5rem 0.5rem;
+ padding: 0.5rem;
+ border: 5px solid #4ebd9c;
+ border-radius:10px ;
+}
+.head-ctrl{
+    
+   display: inline-flex;
+}
+.ctrl-span{
+
+margin: 0.5rem 0.5rem 0.5rem 0rem;
+}
+.logo h2{
+color: white;
+font-size: 30px;
+text-align: left;
+
+}
+.head span{
+    color: white;
+    margin-left: 0.25rem;
+    font-weight: bold;
+}
+
+/* Tooltip Styles */
+.bar-container .bar-con .bar {
+    position: relative;
+  }
+  
+  .bar-container .bar-con .bar::before {
+    content: attr(data-tooltip);
+    background-color: black;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 2;
+    position: absolute;
+    bottom: 100%; /* Position above the bar */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+  
+  .bar-container .bar-con .bar:hover::before {
+    opacity: 1;
+    visibility: visible;
+  }
+  .algo-info{
+    color: white;
+    margin: 1.5rem 1rem;
+    background-color: rgba(0, 255, 255, 0.019);
+    text-align: left;
+    padding: 2rem;
+    display: flex;
+    border-radius: 10px;
+  }
+  .algo-info div{
+    margin: 1rem 1rem;
+    width: 50%;
+  }
+  .algo-info .perf{
+    margin-left: 2rem;
+    padding-left: 2rem;
+    border-left: 5px solid #4ebd9c;
+  }
+  .algo-info .perf h4{
+    margin: 0.5rem 0rem;
+    text-decoration:solid white;
+  }
+ 
+  .algo-info h3{
+    font-size: 16px;
+  }
+  .algo-info h3{
+    line-height: 30px;
+  }
+  
+  
+  
+  
