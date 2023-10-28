@@ -1,18 +1,32 @@
 import React, { useEffect, useState } from "react";
-import Slider from "@mui/material/Slider";
 import "./sortVisualizer.css";
 import { getMergeSortAnimations } from "../SortAlgorithms/mergeSort.js";
+import { algoDetails} from "../utils/algoDetails";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
 const SortVisualizer = () => {
   const [array, setArray] = useState([]);
   const [size, setSize] = useState(5);
   const [speed, setSpeed] = useState(1);
   const [generate, setGenerate] = useState(false);
+  const [algoName,setAlgoName]=useState("");
+  const algoDet=algoDetails;
+  console.log(algoDet);
+  const [selectedAlgo, setSelectedAlgo] = useState(null);
+
+  useEffect(() => {
+    // Find and set the details of the selected algorithm
+    console.log(algoName);
+    const selectedAlgorithm = algoDetails.find(algo => algo.name === algoName);
+    setSelectedAlgo(selectedAlgorithm);
+  }, [algoName]);
+
   useEffect(() => {
     const resetArray = () => {
       const array = [];
       console.log(size);
       for (let i = 0; i < size; i++) {
-        array.push(randomIntFromInterval(5, 310));
+        array.push(randomIntFromInterval(5, 300));
       }
       setArray(array);
     };
@@ -53,70 +67,76 @@ const SortVisualizer = () => {
     animate(animations);
   };
 
+  const sort=(algo)=>{
+       if(algo==="Merge sort")
+       {
+        MergeSort();
+       }
+  }
   return (
     <div className="container">
-      <div className="logo">
-        <h2>Sorting Visualizer</h2>
-      </div>
-
-      <div className="head">
-        <div className="head-btn">
+      <nav className="navbar">
+        <div className="navbar-container">
+        <div className="logo">
+          <h2>Sorting Visualizer</h2>
+        </div>
+      <div className="nav-elements">
+        <ul>
+          <li>
+          <select onChange={(event)=>{
+            setAlgoName(event.target.value);
+          }}>
+            <option>Algorithm</option>
+            <option>Merge sort</option>
+            <option>Selection sort</option>
+            <option>Insertion sort</option>
+            <option>Bubble sort</option>
+            <option>Quick sort</option>
+            <option>Heap sort</option>
+          </select>
+          </li>
+          <li>
+          <select onChange={(event) => {
+              setSize(event.target.value);
+            }}>
+            <option>Size</option>
+            <option>5</option>
+            <option>10</option>
+            <option>20</option>
+            <option>50</option>
+            <option>100</option>
+          </select>
+          </li>
+          <li>
+          <select onChange={(event) => {
+              setSpeed(event.target.value);
+            }}>
+            <option>Speed</option>
+            <option>0.25</option>
+            <option>0.5</option>
+            <option>0.75</option>
+            <option>1</option>
+            <option>1.25</option>
+            <option>1.50</option>
+            <option>1.75</option>
+            <option>2</option>
+          </select>
+          </li>
+          <li>
           <button
             className="generate-btn"
             onClick={() => {
               setGenerate(!generate);
             }}
           >
-            new array
+            Randomize
           </button>
-
-          <span>Algorithms:</span>
-          <button onClick={() => MergeSort()}>Merge sort</button>
-          <button onClick={() => MergeSort()}>Selection sort</button>
-          <button onClick={() => MergeSort()}>Insertion sort</button>
-          <button onClick={() => MergeSort()}>Bubble sort</button>
-          <button onClick={() => MergeSort()}>Quick sort</button>
-          <button onClick={() => MergeSort()}>Heap sort</button>
-        </div>
-
-        <div className="head-ctrl">
-          <span className="ctrl-span">Size:</span>
-          <Slider
-            value={size}
-            min={5}
-            max={100}
-            step={5}
-            markgetariavaluetext={size}
-            valueLabelDisplay="auto"
-            onChange={(event) => {
-              setSize(event.target.value);
-            }}
-            style={{
-              color: "#fff",
-              width: "150px",
-              margin: "0.5rem",
-            }}
-          />
-
-          <span className="ctrl-span">speed:</span>
-          <Slider
-            value={speed}
-            min={0.25}
-            max={2}
-            step={0.25}
-            markgetariavaluetext={size}
-            valueLabelDisplay="auto"
-            onChange={(event) => {
-              setSpeed(event.target.value);
-            }}
-            style={{
-              color: "#fff",
-              width: "150px",
-              margin: "0.5rem",
-            }}
-          />
-        </div>
+          </li>
+        </ul>
       </div>
+        </div>
+      </nav>
+
 
       <div className="bar-container">
         <div className="bar-con">
@@ -126,31 +146,35 @@ const SortVisualizer = () => {
               style={{
                 height: `${value}px`,
                 width: size <= 10 && size >= 100 ? "5rem" : "20rem",
-                backgroundColor: "#4ebd9c",
+              
               }}
               key={indx}
               data-tooltip={value}
             >
-              {size < 40 && value}
+              <span>{size < 40 && value}</span>
+              
             </div>
           ))}
         </div>
       </div>
-
+      <div className="play">
+            <FontAwesomeIcon icon={faPlay} onClick={()=>{
+              sort(algoName);
+            }} className="play-btn" />
+            
+      </div>
       <div className="algo-info">
         <div className="desc">
-        <h3>
-          Merge sort is defined as a sorting algorithm that works by dividing an
-          array into smaller subarrays, sorting each subarray, and then merging
-          the sorted subarrays back together to form the final sorted array.
-        </h3>
+        <h3>{selectedAlgo?selectedAlgo.description:"select the algorithm to sort the randomize array select the algorithm to sort the randomize array select the algorithm to sort the randomize array select the algorithm to sort the randomize array"}</h3>
         </div>
+        
         <div className="perf">
           <h2>Performance</h2>
-          <h4>Best Case Time Complexity: O(nlogn)</h4>
-          <h4>Average Case Time Complexity: O(nlogn)</h4>
-          <h4>Worst Case Time Complexity: O(n^2)</h4>
-          <h4>Worst Case Space Complexity: O(nlogn)</h4>
+          <br></br>
+          <h4>Best Case Time Complexity: {selectedAlgo?selectedAlgo.BCTC:" "}</h4>
+          <h4>Average Case Time Complexity: {selectedAlgo?selectedAlgo.ACTC:" "}</h4>
+          <h4>Worst Case Time Complexity: {selectedAlgo?selectedAlgo.WCTC:" "}</h4>
+          <h4>Worst Case Space Complexity: {selectedAlgo?selectedAlgo.WCSC:" "}</h4>
         </div>
        
       </div>
