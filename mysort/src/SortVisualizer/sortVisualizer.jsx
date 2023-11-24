@@ -56,6 +56,7 @@ const SortVisualizer = () => {
         setTimeout(() => {
           const barOneStyle = arrayBar[barOneIndx].style;
           barOneStyle.height = `${barTwoIndx}px`;
+          barOneStyle.color="white";
           arrayBar[barOneIndx].setAttribute("data-tooltip", barTwoIndx);
           console.log(size);
           if (size <= 40) {
