@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./sortVisualizer.css";
 import { getMergeSortAnimations } from "../SortAlgorithms/mergeSort.js";
+import { getSelectionSortAnimations } from "../SortAlgorithms/selectionSort";
 import { algoDetails} from "../utils/algoDetails";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { getInsertionSortAnimations } from "../SortAlgorithms/insertionSort.js";
+import { getBubbleSortAnimations } from "../SortAlgorithms/bubbleSort.js";
 const SortVisualizer = () => {
   const [array, setArray] = useState([]);
   const [size, setSize] = useState(5);
@@ -23,6 +26,7 @@ const SortVisualizer = () => {
 
   useEffect(() => {
     const resetArray = () => {
+      
       const array = [];
       console.log(size);
       for (let i = 0; i < size; i++) {
@@ -41,7 +45,7 @@ const SortVisualizer = () => {
       if (isColor) {
         const barOneStyle = arrayBar[barOneIndx].style;
         const barTwoStyle = arrayBar[barTwoIndx].style;
-        const color = !isLast ? "red" : "#4ebd9c";
+        const color = !isLast ? "#f77171" : "#08f8b4be";
 
         setTimeout(() => {
           barOneStyle.backgroundColor = color;
@@ -67,10 +71,40 @@ const SortVisualizer = () => {
     animate(animations);
   };
 
+  const SelectionSort = () => {
+    const arr = [...array];
+    const animations =getSelectionSortAnimations(arr);
+    animate(animations);
+  };
+
+  const InsertionSort = () =>{
+    const arr= [...array];
+    const animations=getInsertionSortAnimations(arr);
+    animate(animations);
+  };
+
+  const BubbleSort = () => {
+    const arr=[...array];
+    const animations=getBubbleSortAnimations(arr);
+    animate(animations);
+  }
+
   const sort=(algo)=>{
        if(algo==="Merge sort")
        {
         MergeSort();
+       }
+       else if(algo==="Selection sort")
+       {
+        SelectionSort();
+       }
+       else if(algo==="Insertion sort")
+       {
+        InsertionSort();
+       }
+       else if(algo==="Bubble sort")
+       {
+        BubbleSort();
        }
   }
   return (
@@ -165,16 +199,17 @@ const SortVisualizer = () => {
       </div>
       <div className="algo-info">
         <div className="desc">
+          <h2>{selectedAlgo && selectedAlgo.name}</h2>
         <h3>{selectedAlgo?selectedAlgo.description:"select the algorithm to sort the randomize array select the algorithm to sort the randomize array select the algorithm to sort the randomize array select the algorithm to sort the randomize array"}</h3>
         </div>
         
         <div className="perf">
           <h2>Performance</h2>
           <br></br>
-          <h4>Best Case Time Complexity: {selectedAlgo?selectedAlgo.BCTC:" "}</h4>
-          <h4>Average Case Time Complexity: {selectedAlgo?selectedAlgo.ACTC:" "}</h4>
-          <h4>Worst Case Time Complexity: {selectedAlgo?selectedAlgo.WCTC:" "}</h4>
-          <h4>Worst Case Space Complexity: {selectedAlgo?selectedAlgo.WCSC:" "}</h4>
+          <h4>Best Case Time Complexity: <span>{selectedAlgo?selectedAlgo.BCTC:" "}</span></h4>
+          <h4>Average Case Time Complexity: <span>{selectedAlgo?selectedAlgo.ACTC:" "}</span></h4>
+          <h4>Worst Case Time Complexity: <span>{selectedAlgo?selectedAlgo.WCTC:" "}</span></h4>
+          <h4>Worst Case Space Complexity: <span>{selectedAlgo?selectedAlgo.WCSC:" "}</span></h4>
         </div>
        
       </div>
