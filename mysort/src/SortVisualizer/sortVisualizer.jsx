@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { getInsertionSortAnimations } from "../SortAlgorithms/insertionSort.js";
 import { getBubbleSortAnimations } from "../SortAlgorithms/bubbleSort.js";
+import { getQuickSortAnimations } from "../SortAlgorithms/quickSort.js";
 const SortVisualizer = () => {
   const [array, setArray] = useState([]);
   const [size, setSize] = useState(5);
@@ -89,6 +90,12 @@ const SortVisualizer = () => {
     animate(animations);
   }
 
+  const QuickSort = () => {
+    const arr = [...array];
+    const animations=getQuickSortAnimations(arr);
+    animate(animations);
+  }
+
   const sort=(algo)=>{
        if(algo==="Merge sort")
        {
@@ -105,6 +112,10 @@ const SortVisualizer = () => {
        else if(algo==="Bubble sort")
        {
         BubbleSort();
+       }
+       else if(algo==="Quick sort")
+       {
+        QuickSort();
        }
   }
   return (
