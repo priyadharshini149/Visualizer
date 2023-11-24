@@ -1,7 +1,7 @@
 
 .bar-container{
-    background-color:rgba(20, 20, 20, 0.487);
-    padding: 1rem;
+    background-color:rgba(43, 43, 43, 0.244);
+    padding: 1.5rem;
     margin-top: 0rem;
 }
 .bar-con{
@@ -13,6 +13,7 @@
     padding: 2rem;
     height: 300px;
     overflow-x: scroll;
+    border-radius: 10px;
 }
 .bar-con::-webkit-scrollbar{
     display: none;
@@ -122,8 +123,8 @@ color: white;
   }
   .algo-info{
     color: white;
-    margin: 0rem 1rem 1.25rem 1rem;
-    background-color: rgba(169, 170, 170, 0.019);
+    margin-bottom: 2rem;
+    background-color: rgba(19, 19, 19, 0.6);
     text-align: left;
     padding: 2rem;
     display: inline-flex;
