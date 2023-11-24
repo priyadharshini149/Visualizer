@@ -2,6 +2,7 @@
 .bar-container{
     background-color:rgba(20, 20, 20, 0.487);
     padding: 1rem;
+    margin-top: 0rem;
 }
 .bar-con{
     margin: auto;
@@ -18,7 +19,9 @@
 }
 .bar
 {
-  background-color: #b6b6b6;
+  background-color: #08f8b4be;
+  /* background-color: #f77171; */
+  /* background-color: #f8f05d; */
     width: 5px;
     display:inline-block;
     margin: 1px 2px;
@@ -26,7 +29,6 @@
 }
 .bar span{
   color: black;
-  font-family: sans-serif;
   margin-bottom: 10px;
 }
 
@@ -83,7 +85,7 @@ button{
   font-size: 16px;
 }
 .play{
-  padding: 1rem 0rem;
+  padding: 0.5rem 0rem;
 }
 .play-btn{
   border-radius: 100px ;
@@ -125,7 +127,7 @@ color: white;
     text-align: left;
     padding: 2rem;
     display: inline-flex;
-    align-items: center;
+   
     border-radius: 10px;
     width: 90%;
   }
@@ -139,12 +141,17 @@ color: white;
   }
   .algo-info .perf h4{
     margin: 0.5rem 0rem;
-    text-decoration:solid white;
+    color: gray;
   }
  
   .algo-info h3{
+    align-items: center;
+    margin-top: 2rem;
     font-size: 16px;
     line-height: 30px;
+  }
+  .perf span{
+    color: white;
   }
   
   
