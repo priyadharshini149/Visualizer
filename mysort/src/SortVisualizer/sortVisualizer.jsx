@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./sortVisualizer.css";
 import { getMergeSortAnimations } from "../SortAlgorithms/mergeSort.js";
 import { getSelectionSortAnimations } from "../SortAlgorithms/selectionSort";
 import { algoDetails} from "../utils/algoDetails";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faPlay,faPause } from '@fortawesome/free-solid-svg-icons';
 import { getInsertionSortAnimations } from "../SortAlgorithms/insertionSort.js";
 import { getBubbleSortAnimations } from "../SortAlgorithms/bubbleSort.js";
 import { getQuickSortAnimations } from "../SortAlgorithms/quickSort.js";
@@ -15,87 +15,154 @@ const SortVisualizer = () => {
   const [generate, setGenerate] = useState(false);
   const [algoName,setAlgoName]=useState();
   const [selectedAlgo, setSelectedAlgo] = useState(null);
+  const[inProgress,setInProgress]=useState(false);
+
+  const [isPaused, setIsPaused] = useState(true);
+  const [animationIndex, setAnimationIndex] = useState(0);
+  const [currentAnimation, setCurrentAnimation] = useState([]);
 
   useEffect(() => {
     // Find and set the details of the selected algorithm
-    console.log(algoName);
     const selectedAlgorithm = algoDetails.find(algo => algo.name === algoName);
     setSelectedAlgo(selectedAlgorithm);
   }, [algoName]);
 
+
+  const resetArray = useCallback(() => {
+    //reset array
+    const array = [];
+    for (let i = 0; i < size; i++) {
+      array.push(randomIntFromInterval(5, 300));
+    }
+    setArray(array);
+  },[size]);
+
+
   useEffect(() => {
-    const resetArray = () => {
-      
-      const array = [];
-      console.log(size);
-      for (let i = 0; i < size; i++) {
-        array.push(randomIntFromInterval(5, 300));
-      }
-      setArray(array);
-    };
+    // generate new array
     resetArray();
-  }, [size, generate]);
+  }, [size, generate,resetArray]);
 
-  const animate = (animation) => {
-    for (let i = 0; i < animation.length; i++) {
-      const arrayBar = document.getElementsByClassName("bar");
 
-      const [barOneIndx, barTwoIndx, isColor, isLast] = animation[i];
-      if (isColor) {
-        const barOneStyle = arrayBar[barOneIndx].style;
-        const barTwoStyle = arrayBar[barTwoIndx].style;
-        const color = !isLast ? "#f77171" : "#08f8b4be";
+  //callback function for animation
+  const animateStep = useCallback(() => {
+    const arrayBars = document.getElementsByClassName("bar");
 
-        setTimeout(() => {
-          barOneStyle.backgroundColor = color;
-          barTwoStyle.backgroundColor = color;
-        }, (i * 100) / speed);
-      } else {
-        setTimeout(() => {
-          const barOneStyle = arrayBar[barOneIndx].style;
-          barOneStyle.height = `${barTwoIndx}px`;
-          barOneStyle.color="white";
-          arrayBar[barOneIndx].setAttribute("data-tooltip", barTwoIndx);
-          console.log(size);
-          if (size <= 40) {
-            arrayBar[barOneIndx].innerHTML = barTwoIndx;
-          }
-        }, (i * 100) / speed);
+    const [barOneIndex, barTwoIndex, isColor, isLast] = currentAnimation[animationIndex];
+
+    if (isColor) {
+      const barOneStyle = arrayBars[barOneIndex].style;
+      const barTwoStyle = arrayBars[barTwoIndex].style;
+      const color = !isLast ? "#f77171" : "#08f8b4be";
+
+      barOneStyle.backgroundColor = color;
+      barTwoStyle.backgroundColor = color;
+    } 
+    
+    else 
+    {
+      const barOneStyle = arrayBars[barOneIndex].style;
+      barOneStyle.height = `${barTwoIndex}px`;
+      barOneStyle.color = "white";
+      arrayBars[barOneIndex].setAttribute("data-tooltip", barTwoIndex);
+      if (size <= 40) 
+      {
+        const newArray=[...array];
+        newArray[barOneIndex]=barTwoIndex;
+        setArray(newArray);
       }
     }
+
+    setAnimationIndex(animationIndex + 1);
+  },[size, animationIndex, currentAnimation,array]);
+
+
+  useEffect(() => {
+    // to animation the array
+    if (!isPaused && animationIndex < currentAnimation.length) {
+      const timer = setTimeout(() => {
+        animateStep();
+      }, 1000 / speed);
+
+      return () => clearTimeout(timer);
+    }
+    if (!isPaused && animationIndex=== currentAnimation.length && currentAnimation.length > 0) {
+      setIsPaused((prevState)=>!prevState);
+      setInProgress(false);
+      setAnimationIndex(0);
+      alert("Sorting completed!"); 
+    }
+  }, [speed,isPaused, animationIndex, currentAnimation,animateStep,inProgress]);
+ 
+
+  // function trigger animation
+  const animate = (animations) => {
+    setCurrentAnimation(animations);
+    setIsPaused(false);
   };
 
+  // to toggle play and pause
+  const togglePlayPause = () => {
+    let alertShown = false;
+    setIsPaused((prevState) => {
+      if (prevState) {
+        if(selectedAlgo)
+        {
+          sort(algoName);
+        }
+        else
+        {
+          if(!alertShown)
+          {
+            alertShown=true
+            alert("please select the sorting algorithm that you need to explore!!!")
+          }
+          return true
+        }
+      }
+      return !prevState;
+    });
+  };
+
+
+ //merge sort function
   const MergeSort = () => {
     const arr = [...array];
     const animations = getMergeSortAnimations(arr);
     animate(animations);
   };
 
+  // selection sort function
   const SelectionSort = () => {
     const arr = [...array];
     const animations =getSelectionSortAnimations(arr);
     animate(animations);
   };
 
+  //insertion sort function
   const InsertionSort = () =>{
     const arr= [...array];
     const animations=getInsertionSortAnimations(arr);
     animate(animations);
   };
 
+  //bubble sort function
   const BubbleSort = () => {
     const arr=[...array];
     const animations=getBubbleSortAnimations(arr);
     animate(animations);
   }
 
+  //quick sort function
   const QuickSort = () => {
     const arr = [...array];
     const animations=getQuickSortAnimations(arr);
     animate(animations);
   }
 
+  // triggering sorting function as per algo selected
   const sort=(algo)=>{
+     setInProgress(true);
        if(algo==="Merge sort")
        {
         MergeSort();
@@ -117,6 +184,8 @@ const SortVisualizer = () => {
         QuickSort();
        }
   }
+
+
   return (
     <div className="container">
       <nav className="navbar">
@@ -127,7 +196,10 @@ const SortVisualizer = () => {
       <div className="nav-elements">
         <ul>
           <li>
-          <select onChange={(event)=>{
+          <select 
+          className= {inProgress?'disable-select':' '}
+          disabled={inProgress}
+          onChange={(event)=>{
             setAlgoName(event.target.value);
           }}>
             <option>Sorting Algorithms</option>
@@ -140,7 +212,10 @@ const SortVisualizer = () => {
           </select>
           </li>
           <li>
-          <select onChange={(event) => {
+          <select 
+          className={inProgress?'disable-select':' '}
+          disabled={inProgress}
+          onChange={(event) => {
               setSize(event.target.value);
             }}>
             <option>Size</option>
@@ -152,7 +227,8 @@ const SortVisualizer = () => {
           </select>
           </li>
           <li>
-          <select onChange={(event) => {
+          <select
+          onChange={(event) => {
               setSpeed(event.target.value);
             }}>
             <option >Speed</option>
@@ -168,9 +244,10 @@ const SortVisualizer = () => {
           </li>
           <li>
           <button
-            className="generate-btn"
+           
+            className={`btn ${inProgress?'disable-btn':'generate-btn'}`}
             onClick={() => {
-              setGenerate(!generate);
+              !inProgress&&setGenerate((prevState)=>!prevState);
             }}
           >
             Randomize
@@ -202,15 +279,7 @@ const SortVisualizer = () => {
         </div>
       </div>
       <div className="play">
-            <FontAwesomeIcon icon={faPlay} onClick={()=>{
-              if(algoName)
-              {
-                sort(algoName);
-              }
-              else{
-                alert("please select sorting algorithm")
-              }
-            }} className="play-btn" />
+            <FontAwesomeIcon icon={!isPaused?faPause:faPlay} onClick={togglePlayPause} className="play-btn" />
             
       </div>
       <div className="algo-info">
