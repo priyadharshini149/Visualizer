@@ -155,6 +155,36 @@ color: white;
     color: white;
   }
   
+
+  @media only screen and (max-width:600px)
+  {
+    .algo-info{
+      flex-direction: column;
+      width: 75%;
+    }
+    .algo-info .perf
+    {
+      width: 100%;
+      border-left:none ;
+      margin-top: 2rem;
+      margin-left: 0rem;
+    padding-left: 0rem;
+
+    }
+
+    .bar-container{
+      padding: 1rem;
+    }
+
+    .navbar-container {
+      margin:0;
+      padding: 0.5rem;
+    }
+
+    .nav-elements ul{
+      display: block;
+    }
+  }
   
   
   
