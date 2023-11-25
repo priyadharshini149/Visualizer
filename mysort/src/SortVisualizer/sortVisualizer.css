@@ -1,4 +1,7 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300&family=Asap:wght@100&family=Cinzel&family=Marhey:wght@300&display=swap');
+
+
 .bar-container{
     background-color:rgba(43, 43, 43, 0.244);
     padding: 1.5rem;
@@ -50,6 +53,9 @@
 
 .logo {
   margin-left: 0rem;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.05rem;
+  font-size: 16px;
 }
 
 
@@ -132,6 +138,12 @@ color: white;
     border-radius: 10px;
     width: 90%;
   }
+  .algo-info h2{
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    letter-spacing: 0.15rem;
+  }
+  
  
   .algo-info .perf{
     margin-left: 2rem;
@@ -143,13 +155,16 @@ color: white;
   .algo-info .perf h4{
     margin: 0.5rem 0rem;
     color: gray;
+    font-weight: 500;
   }
  
   .algo-info h3{
     align-items: center;
     margin-top: 2rem;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 30px;
+    font-weight: 500;
+    color: rgb(178, 178, 178);
   }
   .perf span{
     color: white;
@@ -166,7 +181,9 @@ color: white;
     {
       width: 100%;
       border-left:none ;
-      margin-top: 2rem;
+      border-top:5px solid #c3c3c3;
+      padding-top: 2rem;
+      margin-top: 3rem;
       margin-left: 0rem;
     padding-left: 0rem;
 
@@ -178,7 +195,7 @@ color: white;
 
     .navbar-container {
       margin:0;
-      padding: 0.5rem;
+      padding: 0.70rem;
     }
 
     .nav-elements ul{

@@ -13,9 +13,7 @@ const SortVisualizer = () => {
   const [size, setSize] = useState(5);
   const [speed, setSpeed] = useState(1);
   const [generate, setGenerate] = useState(false);
-  const [algoName,setAlgoName]=useState("");
-  const algoDet=algoDetails;
-  console.log(algoDet);
+  const [algoName,setAlgoName]=useState();
   const [selectedAlgo, setSelectedAlgo] = useState(null);
 
   useEffect(() => {
@@ -132,7 +130,7 @@ const SortVisualizer = () => {
           <select onChange={(event)=>{
             setAlgoName(event.target.value);
           }}>
-            <option>Algorithm</option>
+            <option>Sorting Algorithms</option>
             <option>Merge sort</option>
             <option>Selection sort</option>
             <option>Insertion sort</option>
@@ -146,7 +144,7 @@ const SortVisualizer = () => {
               setSize(event.target.value);
             }}>
             <option>Size</option>
-            <option>5</option>
+            <option selected="selected">5</option>
             <option>10</option>
             <option>20</option>
             <option>50</option>
@@ -157,15 +155,15 @@ const SortVisualizer = () => {
           <select onChange={(event) => {
               setSpeed(event.target.value);
             }}>
-            <option>Speed</option>
-            <option>0.25</option>
-            <option>0.5</option>
-            <option>0.75</option>
-            <option>1</option>
-            <option>1.25</option>
-            <option>1.50</option>
-            <option>1.75</option>
-            <option>2</option>
+            <option >Speed</option>
+            <option value="0.25">0.25x</option>
+            <option value="0.5">0.5x</option>
+            <option value="0.75">0.75x</option>
+            <option value="1"selected="selected">1x</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.50">1.50x</option>
+            <option value="1.75">1.75x</option>
+            <option value="2">2x</option>
           </select>
           </li>
           <li>
@@ -205,23 +203,43 @@ const SortVisualizer = () => {
       </div>
       <div className="play">
             <FontAwesomeIcon icon={faPlay} onClick={()=>{
-              sort(algoName);
+              if(algoName)
+              {
+                sort(algoName);
+              }
+              else{
+                alert("please select sorting algorithm")
+              }
             }} className="play-btn" />
             
       </div>
       <div className="algo-info">
         <div className="desc">
-          <h2>{selectedAlgo && selectedAlgo.name}</h2>
-        <h3>{selectedAlgo?selectedAlgo.description:"select the algorithm to sort the randomize array select the algorithm to sort the randomize array select the algorithm to sort the randomize array select the algorithm to sort the randomize array"}</h3>
+          <h2>{selectedAlgo?selectedAlgo.name:"Select Algorithm"}</h2>
+        <h3>{selectedAlgo?selectedAlgo.description:"Before diving into the visualization of an algorithm's execution on a set of numbers, please select your preferred algorithm. Let's get started on this visual journey together!"}</h3>
         </div>
         
         <div className="perf">
           <h2>Performance</h2>
           <br></br>
-          <h4>Best Case Time Complexity: <span>{selectedAlgo?selectedAlgo.BCTC:" "}</span></h4>
-          <h4>Average Case Time Complexity: <span>{selectedAlgo?selectedAlgo.ACTC:" "}</span></h4>
-          <h4>Worst Case Time Complexity: <span>{selectedAlgo?selectedAlgo.WCTC:" "}</span></h4>
-          <h4>Worst Case Space Complexity: <span>{selectedAlgo?selectedAlgo.WCSC:" "}</span></h4>
+          <table className="perf-table">
+            <tr>
+              <td><h4>Best Case Time Complexity: </h4></td>
+              <td><span>{selectedAlgo?selectedAlgo.BCTC:" "}</span></td>
+            </tr>
+            <tr>
+              <td><h4>Average Case Time Complexity: </h4></td>
+              <td> <span>{selectedAlgo?selectedAlgo.ACTC:" "}</span></td>
+            </tr>
+            <tr>
+              <td><h4>Worst Case Time Complexity: </h4></td>
+              <td> <span>{selectedAlgo?selectedAlgo.WCTC:" "}</span></td>
+            </tr>
+            <tr>
+              <td><h4>Worst Case Space Complexity: </h4></td>
+              <td> <span>{selectedAlgo?selectedAlgo.WCSC:" "}</span></td>
+            </tr>
+          </table>
         </div>
        
       </div>
