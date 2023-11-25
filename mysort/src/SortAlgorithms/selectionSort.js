@@ -1,6 +1,5 @@
 export function getSelectionSortAnimations(array)
 {
-    console.log(array);
     let min_idx;
     let n=array.length;
     const animations=[];
