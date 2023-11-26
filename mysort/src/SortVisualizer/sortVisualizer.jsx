@@ -225,7 +225,6 @@ const SortVisualizer = () => {
             <option>Insertion sort</option>
             <option>Bubble sort</option>
             <option>Quick sort</option>
-            <option>Heap sort</option>
           </select>
           </li>
           <li>
