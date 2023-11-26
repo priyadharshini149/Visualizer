@@ -82,7 +82,7 @@ const SortVisualizer = () => {
     if (!isPaused && animationIndex < currentAnimation.length) {
       const timer = setTimeout(() => {
         animateStep();
-      }, 1000 / speed);
+      }, 500 / speed);
 
       return () => clearTimeout(timer);
     }
