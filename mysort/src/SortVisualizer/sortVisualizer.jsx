@@ -271,9 +271,9 @@ const SortVisualizer = () => {
           </button>
           </li>
           <li>
-            <button className="btn"
+            <button className={`btn ${!inProgress?'disable-btn':' '}`}
             onClick={()=>{
-              handleAbort() 
+              inProgress&&handleAbort() 
             }}
             >
               Abort
