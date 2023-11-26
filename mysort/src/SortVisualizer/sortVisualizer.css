@@ -25,14 +25,12 @@
 {
   background-color: #08f8b4be;
   /* background-color: #f77171; */
-  /* background-color: #f8f05d; */
     width: 5px;
     display:inline-block;
     margin: 1px 2px;
     padding: 5px;     
 }
 .bar span{
-  color: rgb(255, 255, 255);
   margin-bottom: 10px;
 }
 
@@ -87,6 +85,7 @@ option{
   background-color:rgb(11, 11, 11);
 }
 .btn{
+  color: white;
   background-color: transparent;
   border: none;
   border-radius: 5px;
@@ -95,19 +94,17 @@ option{
   font-size: 16px;
   cursor: pointer;
 }
-.generate-btn{
-  color: white;
 
-}
 .disable-btn{
   color: gray;
 
 }
 .play{
   padding: 0.5rem 0rem;
-  cursor: pointer;
+ 
 }
 .play-btn{
+  cursor: pointer;
   border-radius: 100px ;
   background-color: rgba(169, 170, 170, 0.129);
 padding: 1rem 1.25rem;
@@ -183,6 +180,24 @@ color: white;
     color: white;
   }
   
+  .representation{
+    color: white;
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+    margin-left: 1rem;
+  }
+  .representation span{
+    margin-left:0.5rem ;
+  }
+  .representation div{
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+    height: 10px;
+    width: 10px;
+    
+  }
 
   @media only screen and (max-width:600px)
   {
@@ -213,6 +228,10 @@ color: white;
 
     .nav-elements ul{
       display: block;
+    }
+
+    .representation{
+      position: relative;
     }
   }
   

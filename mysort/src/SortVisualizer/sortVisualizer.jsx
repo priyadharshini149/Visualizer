@@ -41,6 +41,7 @@ const SortVisualizer = () => {
   useEffect(() => {
     // generate new array
     resetArray();
+    resetColor("#08f8b4be");
   }, [size, generate,resetArray]);
 
 
@@ -63,7 +64,6 @@ const SortVisualizer = () => {
     {
       const barOneStyle = arrayBars[barOneIndex].style;
       barOneStyle.height = `${barTwoIndex}px`;
-      barOneStyle.color = "white";
       arrayBars[barOneIndex].setAttribute("data-tooltip", barTwoIndex);
       if (size <= 40) 
       {
@@ -87,10 +87,10 @@ const SortVisualizer = () => {
       return () => clearTimeout(timer);
     }
     if (!isPaused && animationIndex=== currentAnimation.length && currentAnimation.length > 0) {
+      resetColor("#f8f174","black");
       setIsPaused((prevState)=>!prevState);
       setInProgress(false);
       setAnimationIndex(0);
-      alert("Sorting completed!"); 
     }
   }, [speed,isPaused, animationIndex, currentAnimation,animateStep,inProgress]);
  
@@ -184,6 +184,23 @@ const SortVisualizer = () => {
         QuickSort();
        }
   }
+ const resetColor=(backgroundColor,textColor="white") =>{
+  const bars=document.getElementsByClassName("bar");
+  for(let i=0;i<bars.length;i++)
+  {
+    bars[i].style.backgroundColor=backgroundColor;
+    bars[i].style.color=textColor;
+  }
+ }
+
+ const handleAbort = () =>{
+  setCurrentAnimation([])
+  setAnimationIndex(0)
+  resetColor("#08f8b4be");
+  setInProgress((prevState)=>!prevState);
+  setIsPaused((prevState)=>!prevState);
+  setGenerate((prevState)=>!prevState);
+ }
 
 
   return (
@@ -245,13 +262,22 @@ const SortVisualizer = () => {
           <li>
           <button
            
-            className={`btn ${inProgress?'disable-btn':'generate-btn'}`}
+            className={`btn ${inProgress?'disable-btn':' '}`}
             onClick={() => {
               !inProgress&&setGenerate((prevState)=>!prevState);
             }}
           >
             Randomize
           </button>
+          </li>
+          <li>
+            <button className="btn"
+            onClick={()=>{
+              handleAbort() 
+            }}
+            >
+              Abort
+            </button>
           </li>
         </ul>
       </div>
@@ -267,6 +293,7 @@ const SortVisualizer = () => {
               style={{
                 height: `${value}px`,
                 width: size <= 10 && size >= 100 ? "5rem" : "20rem",
+                color:"white",
               
               }}
               key={indx}
@@ -278,9 +305,15 @@ const SortVisualizer = () => {
           ))}
         </div>
       </div>
+
+      <div className="representation">
+        <div style={{backgroundColor:"#08f8b4be"}}></div><span>unsorted array</span>
+        <div style={{backgroundColor:"#f77171"}}></div><span>pointer</span>
+        <div style={{backgroundColor:"#f8f174"}}></div><span>sorted array</span>
+      </div>
+
       <div className="play">
-            <FontAwesomeIcon icon={!isPaused?faPause:faPlay} onClick={togglePlayPause} className="play-btn" />
-            
+            <FontAwesomeIcon icon={!isPaused?faPause:faPlay} onClick={togglePlayPause} className="play-btn" />     
       </div>
       <div className="algo-info">
         <div className="desc">
