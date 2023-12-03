@@ -59,13 +59,26 @@
 
 .nav-elements ul {
   display: flex;
-  justify-content: space-between;
   list-style-type: none;
+  justify-content: space-between;
+  padding-right: 1rem;
 }
 
 .nav-elements ul li:not(:last-child) {
   margin-right: 2rem;
 }
+
+
+.menu-icon {
+  display: none;
+  position: relative;
+  right: 2rem;
+
+}
+.menu-icon .menu-bar{
+  height: 1.5rem;
+}
+
 
 select{
   font-size: 16px;
@@ -201,6 +214,11 @@ color: white;
 
   @media only screen and (max-width:600px)
   {
+    .menu-icon {
+      display: block;
+      cursor: pointer;
+    }
+    
     .algo-info{
       flex-direction: column;
       width: 75%;
@@ -226,10 +244,35 @@ color: white;
       padding: 0.70rem;
     }
 
-    .nav-elements ul{
+    /* .nav-elements ul{
       display: block;
+    } */
+    
+    .nav-elements.active {
+      width: 270px;
     }
-
+    
+    .nav-elements
+    {
+      position: absolute;
+      right: 0;
+      top: 60px;
+      background-color: rgb(9, 9, 9);
+      width: 0px;
+      z-index: 2;
+      height: calc(100vh - 60px);
+      transition: all 0.3s ease-in;
+      overflow: hidden;
+    }
+    .nav-elements ul {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .nav-elements ul li {
+      margin-right: unset;
+      margin-top: 20px;
+    }
     .representation{
       position: relative;
     }

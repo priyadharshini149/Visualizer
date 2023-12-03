@@ -4,7 +4,7 @@ import { getMergeSortAnimations } from "../SortAlgorithms/mergeSort.js";
 import { getSelectionSortAnimations } from "../SortAlgorithms/selectionSort";
 import { algoDetails} from "../utils/algoDetails";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay,faPause } from '@fortawesome/free-solid-svg-icons';
+import { faPlay,faPause,faBars, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { getInsertionSortAnimations } from "../SortAlgorithms/insertionSort.js";
 import { getBubbleSortAnimations } from "../SortAlgorithms/bubbleSort.js";
 import { getQuickSortAnimations } from "../SortAlgorithms/quickSort.js";
@@ -20,6 +20,8 @@ const SortVisualizer = () => {
   const [isPaused, setIsPaused] = useState(true);
   const [animationIndex, setAnimationIndex] = useState(0);
   const [currentAnimation, setCurrentAnimation] = useState([]);
+
+  const [showNavBar,setShowNavBar]=useState(false)
 
   useEffect(() => {
     // Find and set the details of the selected algorithm
@@ -202,6 +204,9 @@ const SortVisualizer = () => {
   setGenerate((prevState)=>!prevState);
  }
 
+ const handleShowNavBar = () =>{
+  setShowNavBar(!showNavBar);
+ }
 
   return (
     <div className="container">
@@ -210,7 +215,10 @@ const SortVisualizer = () => {
         <div className="logo">
           <h2>Sorting Visualizer</h2>
         </div>
-      <div className="nav-elements">
+        <div className="menu-icon" onClick={handleShowNavBar}>
+        <FontAwesomeIcon icon={!showNavBar?faBars:faXmark} className="menu-bar" /> 
+        </div>
+      <div className={`nav-elements ${showNavBar &&'active'}`}>
         <ul>
           <li>
           <select 
